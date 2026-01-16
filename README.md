@@ -2,7 +2,7 @@
 
 A CLI-based website builder system that enables non-technical partners to create professional websites for small local businesses using Claude Code slash commands.
 
-> **Partner?** Start here: [Partner Guide](docs/PARTNER_GUIDE.md)
+> **Getting Started?** See the [Setup Guide](docs/TESTING_GUIDE.md)
 
 ## Overview
 
