@@ -8,6 +8,30 @@ Get the base template running locally in under 5 minutes.
 - npm or pnpm package manager
 - Git
 
+## Required Accounts
+
+Create accounts on these services before starting:
+
+| Service | URL | Purpose | Free Tier |
+|---------|-----|---------|-----------|
+| **GitHub** | https://github.com | Code hosting | Unlimited |
+| **Vercel** | https://vercel.com | Website hosting | Hobby plan |
+| **Turso** | https://turso.tech | Database | 500 DBs, 9GB |
+| **Resend** | https://resend.com | Email delivery | 3,000/month |
+
+### Getting Your API Keys
+
+1. **Turso Database**:
+   - Go to https://turso.tech and sign up (use GitHub)
+   - Click **Create Database** → name it for your project
+   - Go to the database → **Connect** tab
+   - Copy the `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN`
+
+2. **Resend API Key**:
+   - Go to https://resend.com and sign up
+   - Go to **API Keys** → **Create API Key**
+   - Copy the key (starts with `re_`)
+
 ## Setup Steps
 
 ### 1. Clone the Template
