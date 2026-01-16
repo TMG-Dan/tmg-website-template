@@ -1,0 +1,420 @@
+openapi: 3.0.3
+info:
+  title: TMG Website Template API
+  description: |
+    API contracts for the TMG Website Template.
+
+    Note: Payload CMS provides automatic REST API at /api/{collection}.
+    This document focuses on custom endpoints and Convex functions.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: Local development
+  - url: https://{domain}
+    description: Production
+    variables:
+      domain:
+        default: example.com
+
+paths:
+  /api/contact:
+    post:
+      summary: Submit contact form
+      description: |
+        Submits a contact form entry. Stores in Convex database
+        and triggers email notification via Resend.
+      operationId: submitContactForm
+      tags:
+        - Contact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactFormInput'
+            example:
+              name: "John Smith"
+              email: "john@example.com"
+              phone: "+1234567890"
+              message: "I'm interested in your services. Please contact me."
+      responses:
+        '200':
+          description: Form submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormResponse'
+              example:
+                success: true
+                id: "k57abc123def456"
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error: "Invalid email format"
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error: "Too many submissions. Please try again later."
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Payload CMS Auto-generated endpoints (documented for reference)
+  /api/pages:
+    get:
+      summary: List pages
+      description: Payload CMS auto-generated endpoint
+      tags:
+        - Pages (Payload)
+      parameters:
+        - $ref: '#/components/parameters/PayloadWhere'
+        - $ref: '#/components/parameters/PayloadLimit'
+        - $ref: '#/components/parameters/PayloadPage'
+        - $ref: '#/components/parameters/PayloadSort'
+      responses:
+        '200':
+          description: Pages list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadPageList'
+
+  /api/pages/{id}:
+    get:
+      summary: Get page by ID
+      tags:
+        - Pages (Payload)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '404':
+          description: Page not found
+
+  /api/posts:
+    get:
+      summary: List blog posts
+      description: Payload CMS auto-generated endpoint
+      tags:
+        - Blog Posts (Payload)
+      parameters:
+        - $ref: '#/components/parameters/PayloadWhere'
+        - $ref: '#/components/parameters/PayloadLimit'
+        - $ref: '#/components/parameters/PayloadPage'
+        - $ref: '#/components/parameters/PayloadSort'
+      responses:
+        '200':
+          description: Blog posts list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayloadBlogPostList'
+
+  /api/posts/{id}:
+    get:
+      summary: Get blog post by ID
+      tags:
+        - Blog Posts (Payload)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Blog post details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlogPost'
+
+  /api/media:
+    get:
+      summary: List media files
+      tags:
+        - Media (Payload)
+      responses:
+        '200':
+          description: Media list
+
+    post:
+      summary: Upload media file
+      tags:
+        - Media (Payload)
+      security:
+        - payloadAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                alt:
+                  type: string
+      responses:
+        '201':
+          description: File uploaded
+        '401':
+          description: Unauthorized
+
+components:
+  schemas:
+    ContactFormInput:
+      type: object
+      required:
+        - name
+        - email
+        - message
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+          description: Submitter's full name
+        email:
+          type: string
+          format: email
+          description: Submitter's email address
+        phone:
+          type: string
+          pattern: '^\+?[0-9\s\-\(\)]+$'
+          description: Optional phone number
+        message:
+          type: string
+          minLength: 10
+          maxLength: 5000
+          description: Message content
+
+    ContactFormResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        id:
+          type: string
+          description: Convex document ID
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          default: false
+        error:
+          type: string
+
+    Page:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        slug:
+          type: string
+        metaDescription:
+          type: string
+        content:
+          type: object
+          description: Lexical rich text content
+        featuredImage:
+          $ref: '#/components/schemas/Media'
+        status:
+          type: string
+          enum: [draft, published]
+        publishedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    BlogPost:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        slug:
+          type: string
+        excerpt:
+          type: string
+        content:
+          type: object
+          description: Lexical rich text content
+        featuredImage:
+          $ref: '#/components/schemas/Media'
+        author:
+          $ref: '#/components/schemas/User'
+        categories:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [draft, published]
+        publishedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Media:
+      type: object
+      properties:
+        id:
+          type: string
+        filename:
+          type: string
+        mimeType:
+          type: string
+        filesize:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+        alt:
+          type: string
+        url:
+          type: string
+          format: uri
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        role:
+          type: string
+          enum: [admin, editor]
+
+    PayloadPageList:
+      type: object
+      properties:
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Page'
+        totalDocs:
+          type: integer
+        limit:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+        hasNextPage:
+          type: boolean
+        hasPrevPage:
+          type: boolean
+
+    PayloadBlogPostList:
+      type: object
+      properties:
+        docs:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlogPost'
+        totalDocs:
+          type: integer
+        limit:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+        hasNextPage:
+          type: boolean
+        hasPrevPage:
+          type: boolean
+
+  parameters:
+    PayloadWhere:
+      name: where
+      in: query
+      description: Payload query filter (JSON encoded)
+      schema:
+        type: string
+      example: '{"status":{"equals":"published"}}'
+
+    PayloadLimit:
+      name: limit
+      in: query
+      description: Number of results per page
+      schema:
+        type: integer
+        default: 10
+
+    PayloadPage:
+      name: page
+      in: query
+      description: Page number
+      schema:
+        type: integer
+        default: 1
+
+    PayloadSort:
+      name: sort
+      in: query
+      description: Sort field (prefix with - for descending)
+      schema:
+        type: string
+      example: '-publishedAt'
+
+  securitySchemes:
+    payloadAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Payload CMS JWT token (from cookie or Authorization header)
+
+tags:
+  - name: Contact
+    description: Custom contact form endpoint
+  - name: Pages (Payload)
+    description: Payload CMS auto-generated pages API
+  - name: Blog Posts (Payload)
+    description: Payload CMS auto-generated blog posts API
+  - name: Media (Payload)
+    description: Payload CMS auto-generated media API
