@@ -10,7 +10,7 @@ A modern website template with built-in slash commands for rapid site creation u
 4. Click Claude icon in sidebar
 5. Type `/tmg-setup` and follow the prompts
 
-See the full [Setup Guide](https://github.com/TMG-Dan/TMG_BASE/blob/main/docs/TESTING_GUIDE.md) for detailed instructions.
+See the full [Setup Guide](docs/SETUP_GUIDE.md) for detailed instructions.
 
 ## Slash Commands Included
 
