@@ -2,7 +2,9 @@
 
 A modern website template with built-in slash commands for rapid site creation using Claude Code.
 
-> **Getting Started?** See the [Setup Guide](docs/TESTING_GUIDE.md)
+> **First time?** See the [Setup Guide](docs/SETUP_GUIDE.md) for initial installation.
+>
+> **Starting a new project?** See the [New Project Guide](docs/NEW_PROJECT.md) for quick reference.
 
 ## Quick Start
 
