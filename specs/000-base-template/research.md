@@ -8,7 +8,7 @@
 
 Research confirms all technology choices are viable and well-suited for the requirements. Key decisions:
 - Payload CMS 3.x embeds natively in Next.js 14 App Router (no separate backend)
-- Convex provides real-time database with simple React integration
+- Turso provides edge SQLite database that integrates with Payload CMS
 - Shadcn UI uses CSS variables for effortless theme customization
 - All technologies have robust free tiers suitable for client sites
 
@@ -64,72 +64,80 @@ const { docs } = await payload.find({ collection: 'posts' })
 
 ---
 
-## 2. Convex Database Integration
+## 2. Turso Database Integration
 
 ### Decision
-Use Convex for contact form submissions and real-time data.
+Use Turso as the edge SQLite database for Payload CMS.
 
 ### Rationale
-- **Real-time by default** - automatic subscriptions in React
-- Generous free tier (sufficient for client sites)
-- TypeScript-native with generated types
-- Server Actions integration via `fetchMutation`
-- No SQL/query language to learn
+- **Edge-native** - SQLite at the edge with global replication
+- Generous free tier (500 databases, 9GB storage, 1B reads/month)
+- Native compatibility with Payload CMS SQLite adapter
+- Simple connection via libsql client
+- Single database for all data (content AND form submissions)
 
 ### Implementation Pattern
 
-**Schema (convex/schema.ts):**
+**Payload Configuration (payload.config.ts):**
 ```typescript
-import { defineSchema, defineTable } from "convex/server"
-import { v } from "convex/values"
+import { buildConfig } from 'payload'
+import { sqliteAdapter } from '@payloadcms/db-sqlite'
 
-export default defineSchema({
-  formSubmissions: defineTable({
-    name: v.string(),
-    email: v.string(),
-    phone: v.optional(v.string()),
-    message: v.string(),
-    submittedAt: v.number(),
-    status: v.union(v.literal("pending"), v.literal("processed")),
-  })
-    .index("by_status", ["status"])
-    .index("by_date", ["submittedAt"])
+export default buildConfig({
+  db: sqliteAdapter({
+    client: {
+      url: process.env.TURSO_DATABASE_URL!,
+      authToken: process.env.TURSO_AUTH_TOKEN,
+    },
+  }),
+  // ... rest of config
 })
 ```
 
-**Mutation (convex/formSubmissions.ts):**
+**Form Submission Collection (payload/collections/FormSubmissions.ts):**
 ```typescript
-import { mutation } from "./_generated/server"
-import { v } from "convex/values"
+import { CollectionConfig } from 'payload'
 
-export const submit = mutation({
-  args: {
-    name: v.string(),
-    email: v.string(),
-    phone: v.optional(v.string()),
-    message: v.string(),
+export const FormSubmissions: CollectionConfig = {
+  slug: 'form-submissions',
+  admin: {
+    useAsTitle: 'name',
   },
-  handler: async (ctx, args) => {
-    return await ctx.db.insert("formSubmissions", {
-      ...args,
-      submittedAt: Date.now(),
-      status: "pending",
-    })
-  },
-})
+  fields: [
+    { name: 'name', type: 'text', required: true },
+    { name: 'email', type: 'email', required: true },
+    { name: 'phone', type: 'text' },
+    { name: 'message', type: 'textarea', required: true },
+    {
+      name: 'status',
+      type: 'select',
+      defaultValue: 'pending',
+      options: [
+        { label: 'Pending', value: 'pending' },
+        { label: 'Processed', value: 'processed' },
+      ],
+    },
+  ],
+}
 ```
 
 **Server Action (Next.js):**
 ```typescript
 'use server'
-import { fetchMutation } from "convex/nextjs"
-import { api } from "@/convex/_generated/api"
+import { getPayload } from 'payload'
+import config from '@/payload.config'
 
 export async function submitContactForm(formData: FormData) {
-  return await fetchMutation(api.formSubmissions.submit, {
-    name: formData.get("name") as string,
-    email: formData.get("email") as string,
-    message: formData.get("message") as string,
+  const payload = await getPayload({ config })
+  return await payload.create({
+    collection: 'form-submissions',
+    data: {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      phone: formData.get("phone") as string || undefined,
+      message: formData.get("message") as string,
+      status: 'pending',
+    },
   })
 }
 ```
@@ -137,9 +145,10 @@ export async function submitContactForm(formData: FormData) {
 ### Alternatives Considered
 | Option | Rejected Because |
 |--------|-----------------|
+| Convex | Not compatible with Payload CMS |
 | Supabase | More complex setup, Postgres overhead |
-| Firebase | Google lock-in, pricing unpredictable |
-| PlanetScale | SQL required, no built-in real-time |
+| PlanetScale | MySQL-based, additional complexity |
+| Local SQLite | No cloud sync, not suitable for production |
 
 ---
 
@@ -294,9 +303,9 @@ tests/
 # Payload CMS
 PAYLOAD_SECRET=your-random-secret-min-32-chars
 
-# Convex
-NEXT_PUBLIC_CONVEX_URL=https://your-project.convex.cloud
-CONVEX_DEPLOY_KEY=prod:your-deploy-key
+# Turso Database
+TURSO_DATABASE_URL=libsql://your-database.turso.io
+TURSO_AUTH_TOKEN=your-auth-token
 
 # Resend (Email)
 RESEND_API_KEY=re_your_api_key
@@ -309,7 +318,7 @@ NEXT_PUBLIC_SITE_URL=https://clientsite.com
 ### Template Defaults (.env.example)
 - All values use placeholder text
 - Partners must configure before deployment
-- Local development works with minimal setup (Convex dev mode)
+- Local development can use local SQLite file for testing
 
 ---
 
@@ -318,7 +327,7 @@ NEXT_PUBLIC_SITE_URL=https://clientsite.com
 | Topic | Finding | Confidence |
 |-------|---------|------------|
 | Payload + Next.js | Native integration, no separate backend | High |
-| Convex real-time | Works with Server Actions and React hooks | High |
+| Turso + Payload | Edge SQLite works seamlessly with Payload CMS | High |
 | Shadcn theming | CSS variables auto-propagate to all components | High |
 | Resend email | Simple API, generous free tier | High |
 | Testing stack | Vitest + Playwright is modern standard | High |

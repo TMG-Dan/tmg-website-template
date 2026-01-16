@@ -56,8 +56,8 @@ Elegant, aesthetic component libraries for non-techy look
 
 Technology
 Purpose
-Convex
-Real-time database with generous free tier
+Turso
+Edge SQLite database with generous free tier
 Payload CMS
 Self-hosted CMS with built-in auth, lives in repo at /admin
  
@@ -284,8 +284,10 @@ Access Code
 The following environment variables are configured automatically during deployment:
 Variable
 Purpose
-CONVEX_DEPLOY_KEY
-Convex database connection
+TURSO_DATABASE_URL
+Turso database connection URL
+TURSO_AUTH_TOKEN
+Turso authentication token
 RESEND_API_KEY
 Email service authentication
 PAYLOAD_SECRET
@@ -302,7 +304,7 @@ Before the business partner can use the system, the following must be configured
 • Configure GitHub CLI authentication (gh auth login)
 • Configure Vercel CLI authentication (vercel login)
 • Set up base repository on GitHub
-• Create shared Convex and Resend accounts
+• Create shared Turso and Resend accounts
 8.2 Per-Project Setup
 
 • Client business information

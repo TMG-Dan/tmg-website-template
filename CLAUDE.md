@@ -4,7 +4,7 @@ Auto-generated from all feature plans. Last updated: 2026-01-16
 
 ## Active Technologies
 
-- TypeScript 5.x, Node.js 18+ + Next.js 14 (App Router), React 18, Tailwind CSS 3.x, Shadcn UI, Payload CMS 3.x, Convex (000-base-template)
+- TypeScript 5.x, Node.js 18+ + Next.js 14 (App Router), React 18, Tailwind CSS 3.x, Shadcn UI, Payload CMS 3.x, Turso (000-base-template)
 
 ## Project Structure
 
@@ -23,7 +23,7 @@ TypeScript 5.x, Node.js 18+: Follow standard conventions
 
 ## Recent Changes
 
-- 000-base-template: Added TypeScript 5.x, Node.js 18+ + Next.js 14 (App Router), React 18, Tailwind CSS 3.x, Shadcn UI, Payload CMS 3.x, Convex
+- 000-base-template: Added TypeScript 5.x, Node.js 18+ + Next.js 14 (App Router), React 18, Tailwind CSS 3.x, Shadcn UI, Payload CMS 3.x, Turso
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

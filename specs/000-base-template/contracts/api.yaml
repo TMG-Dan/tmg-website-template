@@ -5,7 +5,7 @@ info:
     API contracts for the TMG Website Template.
 
     Note: Payload CMS provides automatic REST API at /api/{collection}.
-    This document focuses on custom endpoints and Convex functions.
+    This document focuses on custom endpoints.
   version: 1.0.0
 
 servers:
@@ -22,7 +22,7 @@ paths:
     post:
       summary: Submit contact form
       description: |
-        Submits a contact form entry. Stores in Convex database
+        Submits a contact form entry. Stores in Payload CMS (Turso)
         and triggers email notification via Resend.
       operationId: submitContactForm
       tags:
@@ -219,7 +219,7 @@ components:
           type: boolean
         id:
           type: string
-          description: Convex document ID
+          description: Payload document ID
 
     ErrorResponse:
       type: object

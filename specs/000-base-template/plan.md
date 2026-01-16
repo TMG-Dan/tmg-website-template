@@ -5,18 +5,18 @@
 
 ## Summary
 
-Create a production-ready Next.js website template that serves as the foundation for all TMG client websites. The template includes a CMS admin dashboard (Payload CMS at /admin), real-time database (Convex), contact form with email notifications (Resend), and a fully customizable design system (Tailwind + Shadcn UI). Partners clone this template to start new client projects, configure the visual design, and deploy to Vercel.
+Create a production-ready Next.js website template that serves as the foundation for all TMG client websites. The template includes a CMS admin dashboard (Payload CMS at /admin), edge database (Turso), contact form with email notifications (Resend), and a fully customizable design system (Tailwind + Shadcn UI). Partners clone this template to start new client projects, configure the visual design, and deploy to Vercel.
 
 ## Technical Context
 
 **Language/Version**: TypeScript 5.x, Node.js 18+
-**Primary Dependencies**: Next.js 14 (App Router), React 18, Tailwind CSS 3.x, Shadcn UI, Payload CMS 3.x, Convex
-**Storage**: Convex (real-time database), Payload CMS (content management with built-in SQLite/Postgres adapter)
+**Primary Dependencies**: Next.js 14 (App Router), React 18, Tailwind CSS 3.x, Shadcn UI, Payload CMS 3.x, Turso
+**Storage**: Turso (edge SQLite database for Payload CMS)
 **Testing**: Vitest (unit), Playwright (E2E), Testing Library (component)
 **Target Platform**: Vercel (serverless hosting), modern browsers (Chrome, Firefox, Safari, Edge)
 **Project Type**: Web application (Next.js monorepo with embedded CMS)
 **Performance Goals**: Lighthouse 80+ mobile, <3s page load, <500ms API response
-**Constraints**: Free tier compatible (Convex, Resend, Vercel), no build-time env vars required for template cloning
+**Constraints**: Free tier compatible (Turso, Resend, Vercel), no build-time env vars required for template cloning
 **Scale/Scope**: Single-tenant per deployment, <10k monthly visitors per client site
 
 ## Constitution Check
@@ -35,7 +35,7 @@ Create a production-ready Next.js website template that serves as the foundation
   - Payload CMS handles authentication with built-in session management
   - Form inputs validated with Zod schemas (client and server)
   - CSRF protection via Next.js built-in mechanisms
-  - Environment variables for all secrets (PAYLOAD_SECRET, RESEND_API_KEY, CONVEX_DEPLOY_KEY)
+  - Environment variables for all secrets (PAYLOAD_SECRET, RESEND_API_KEY, TURSO_DATABASE_URL, TURSO_AUTH_TOKEN)
   - No sensitive data in client bundles
 
 ### III. Performance & Scalability
@@ -60,7 +60,7 @@ Create a production-ready Next.js website template that serves as the foundation
 - **Status**: COMPLIANT
 - **Plan**:
   - Use Shadcn UI primitives (copy-paste, no heavy abstraction)
-  - Convex provides real-time without custom WebSocket setup
+- Turso provides edge SQLite that works directly with Payload CMS
   - Payload CMS embedded in Next.js (no separate backend)
   - Theme config in single tailwind.config.js file
   - No custom framework abstractions
@@ -89,10 +89,6 @@ tmg-website-template/
 ├── tailwind.config.js        # Theme customization entry point
 ├── tsconfig.json
 ├── .env.example              # Required environment variables
-├── convex/
-│   ├── schema.ts             # Convex database schema
-│   ├── formSubmissions.ts    # Form submission mutations/queries
-│   └── _generated/           # Convex generated types
 ├── payload/
 │   ├── payload.config.ts     # Payload CMS configuration
 │   └── collections/
@@ -139,7 +135,7 @@ tmg-website-template/
     └── e2e/
 ```
 
-**Structure Decision**: Next.js App Router with embedded Payload CMS. Single repository structure where Payload admin is served from the same Next.js application at /admin route. Convex handles real-time data for contact form submissions. This avoids a separate backend service while providing full CMS functionality.
+**Structure Decision**: Next.js App Router with embedded Payload CMS. Single repository structure where Payload admin is served from the same Next.js application at /admin route. Turso provides the edge SQLite database for Payload CMS, handling all data including content and form submissions. This avoids a separate backend service while providing full CMS functionality.
 
 ## Complexity Tracking
 

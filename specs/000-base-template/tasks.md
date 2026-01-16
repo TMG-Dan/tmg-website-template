@@ -17,7 +17,6 @@
 
 This is a **Next.js App Router** project with embedded Payload CMS:
 - `src/` - Application source code
-- `convex/` - Convex database schema and functions
 - `payload/` - Payload CMS collections
 - `tests/` - Test files
 - `public/` - Static assets
@@ -48,10 +47,10 @@ This is a **Next.js App Router** project with embedded Payload CMS:
 
 - [ ] T010 Create src/app/globals.css with CSS variable definitions for theming
 - [ ] T011 Create src/lib/utils.ts with cn() helper and common utilities
-- [ ] T012 [P] Initialize Convex project with convex/ directory structure
-- [ ] T013 [P] Create convex/schema.ts with formSubmissions table definition
+- [ ] T012 [P] Configure Turso database connection in payload.config.ts
+- [ ] T013 [P] Create payload/collections/FormSubmissions.ts for contact form data
 - [ ] T014 [P] Create payload/payload.config.ts with base CMS configuration
-- [ ] T015 Create src/app/layout.tsx with ConvexProvider and base HTML structure
+- [ ] T015 Create src/app/layout.tsx with providers and base HTML structure
 - [ ] T016 [P] Create src/config/site.ts with site metadata (name, description, URL)
 - [ ] T017 [P] Create src/config/navigation.ts with navigation items structure
 - [ ] T018 [P] Install and configure Shadcn UI base components (button, card, input, textarea)
@@ -123,9 +122,9 @@ This is a **Next.js App Router** project with embedded Payload CMS:
 
 ## Phase 5: User Story 3 - Website Visitor Submits Contact Form (Priority: P2)
 
-**Goal**: Contact form collects data, stores in Convex, sends email notification via Resend
+**Goal**: Contact form collects data, stores in Payload CMS (Turso), sends email notification via Resend
 
-**Independent Test**: Fill out contact form, submit, verify submission in Convex dashboard and email received
+**Independent Test**: Fill out contact form, submit, verify submission in Payload CMS admin and email received
 
 ### Tests for User Story 3
 
@@ -136,7 +135,7 @@ This is a **Next.js App Router** project with embedded Payload CMS:
 ### Implementation for User Story 3
 
 - [ ] T051 [P] [US3] Create src/lib/validations.ts with Zod schemas for contact form
-- [ ] T052 [P] [US3] Create convex/formSubmissions.ts with submit mutation and query functions
+- [ ] T052 [P] [US3] Create form submission API route using Payload Local API
 - [ ] T053 [P] [US3] Create src/lib/email.ts with Resend email sending function
 - [ ] T054 [US3] Create src/components/forms/ContactForm.tsx with validation
 - [ ] T055 [US3] Create src/app/contact/page.tsx with ContactForm component

@@ -37,8 +37,9 @@ Edit `.env.local` with your values:
 # Payload CMS (generate a random 32+ char string)
 PAYLOAD_SECRET=your-super-secret-key-at-least-32-characters
 
-# Convex (get from convex.dev dashboard)
-NEXT_PUBLIC_CONVEX_URL=https://your-project.convex.cloud
+# Turso Database (get from turso.tech dashboard)
+TURSO_DATABASE_URL=libsql://your-database.turso.io
+TURSO_AUTH_TOKEN=your-auth-token
 
 # Resend (get from resend.com dashboard)
 RESEND_API_KEY=re_your_api_key
@@ -48,28 +49,18 @@ CONTACT_EMAIL=notifications@yourdomain.com
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-### 4. Initialize Convex (First Time Only)
-
-```bash
-npx convex dev
-```
-
-This creates your Convex project and pushes the schema. Keep this terminal running during development for real-time sync.
-
-### 5. Start the Development Server
-
-In a new terminal:
+### 4. Start the Development Server
 
 ```bash
 npm run dev
 ```
 
-### 6. Access the Site
+### 5. Access the Site
 
 - **Frontend**: http://localhost:3000
 - **CMS Admin**: http://localhost:3000/admin
 
-### 7. Create Admin User
+### 6. Create Admin User
 
 On first visit to `/admin`, you'll be prompted to create your admin account:
 
@@ -153,8 +144,7 @@ Edit Payload collections in `payload/collections/`:
 | `npm run dev` | Start development server |
 | `npm run build` | Build for production |
 | `npm run start` | Start production server |
-| `npx convex dev` | Start Convex dev sync |
-| `npx convex deploy` | Deploy Convex to production |
+| `npm run db:push` | Push schema changes to Turso |
 
 ## Deployment
 
@@ -178,9 +168,9 @@ vercel
 - Make sure the dev server is running
 - Check that `PAYLOAD_SECRET` is set in `.env.local`
 
-### Convex mutations fail
-- Ensure `npx convex dev` is running in another terminal
-- Check `NEXT_PUBLIC_CONVEX_URL` is correct
+### Database connection fails
+- Verify `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` are correct
+- Check Turso dashboard for database status
 
 ### Emails not sending
 - Verify `RESEND_API_KEY` is valid

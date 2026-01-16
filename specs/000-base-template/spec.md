@@ -3,7 +3,7 @@
 **Feature Branch**: `000-base-template`
 **Created**: 2026-01-16
 **Status**: Draft
-**Input**: User description: "Base website template with Next.js, Tailwind, Shadcn, Payload CMS, and Convex for the TMG Website Builder system"
+**Input**: User description: "Base website template with Next.js, Tailwind, Shadcn, Payload CMS, and Turso for the TMG Website Builder system"
 
 ## User Scenarios & Testing *(mandatory)*
 
