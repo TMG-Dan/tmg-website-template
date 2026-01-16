@@ -1,29 +1,24 @@
 # /tmg-setup - Project Initialization
 
-Clone the TMG website template and initialize a new client project.
+Configure a cloned TMG website template for a new client project.
 
-## Template Repository
+## Prerequisites
 
-`https://github.com/TMG-Dan/tmg-website-template`
+The user should have already:
+1. Cloned the template: `git clone https://github.com/TMG-Dan/tmg-website-template.git client-name`
+2. Removed the template remote: `git remote remove origin`
+3. Installed dependencies: `npm install`
+4. Created `.env.local` from `.env.example`
 
 ## Workflow
 
 1. **Gather Project Details**
    Ask the user for:
-   - Project/client name (e.g., "Acme Plumbing")
-   - Target folder location (default: `~/Projects/{project-name-slug}`)
+   - Client/business name (e.g., "Acme Plumbing")
    - Client business type/industry
    - Does client have an existing website? (URL if yes)
 
-2. **Clone Template**
-   ```bash
-   git clone https://github.com/TMG-Dan/tmg-website-template.git {project-folder}
-   cd {project-folder}
-   rm -rf .git
-   git init
-   ```
-
-3. **Configure Project**
+2. **Configure Project**
    - Update `package.json` with project name
    - Update `src/config/site.ts` with client business name
    - Create `tmg-config.json` with project metadata:
@@ -38,26 +33,28 @@ Clone the TMG website template and initialize a new client project.
      }
      ```
 
-4. **Install Dependencies**
-   ```bash
-   npm install
-   ```
+3. **Verify Environment**
+   Check that `.env.local` exists and has required values:
+   - `PAYLOAD_SECRET` - CMS secret key
+   - `TURSO_DATABASE_URL` - Turso database URL
+   - `TURSO_AUTH_TOKEN` - Turso auth token
+   - `RESEND_API_KEY` - Email service key
+   - `CONTACT_EMAIL` - Where to send form submissions
 
-5. **Initialize Git**
+4. **Initial Commit**
    ```bash
    git add -A
    git commit -m "Initial commit: {Client Name} website"
    ```
 
-6. **Verify Setup**
+5. **Verify Setup**
    - Run `npm run dev` to confirm template starts
    - Open http://localhost:3000 to verify
 
 ## Output
 
-- Cloned and configured Next.js project
+- Configured Next.js project
 - `tmg-config.json` with client details
-- Dependencies installed
 - Git initialized with initial commit
 - Dev server running for verification
 
@@ -78,13 +75,10 @@ Based on user responses, suggest:
 ```
 User: /tmg-setup
 
-Claude: I'll help you set up a new client website.
+Claude: I'll help you configure this project for your client.
 
-What's the client/project name?
+What's the client/business name?
 > Acme Plumbing
-
-Where should I create the project?
-> ~/Projects/acme-plumbing (default)
 
 What industry/business type?
 > Plumbing and HVAC services
@@ -92,13 +86,14 @@ What industry/business type?
 Does the client have an existing website?
 > Yes, https://acmeplumbing.com
 
-Creating project...
-✓ Cloned template
-✓ Updated configuration
-✓ Installed dependencies
-✓ Git initialized
+Configuring project...
+✓ Updated package.json
+✓ Updated site configuration
+✓ Created tmg-config.json
+✓ Verified .env.local exists
+✓ Initial commit created
 
-Project ready at ~/Projects/acme-plumbing
+Project configured for Acme Plumbing!
 
 Since they have an existing website, run /tmg-scrape next to extract their content.
 ```

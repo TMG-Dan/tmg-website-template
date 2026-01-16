@@ -43,7 +43,10 @@ Deploy the completed website to GitHub and Vercel.
    In Vercel dashboard or CLI, set:
    ```
    PAYLOAD_SECRET=<generate-random-string>
-   DATABASE_URI=<mongodb-connection-string>
+   TURSO_DATABASE_URL=<turso-database-url>
+   TURSO_AUTH_TOKEN=<turso-auth-token>
+   RESEND_API_KEY=<resend-api-key>
+   CONTACT_EMAIL=<client-email>
    NEXT_PUBLIC_SITE_URL=https://{project}.vercel.app
    ```
 
@@ -69,22 +72,19 @@ Deploy the completed website to GitHub and Vercel.
 | Variable | Required | Purpose |
 |----------|----------|---------|
 | `PAYLOAD_SECRET` | Yes | CMS encryption key (generate with `openssl rand -base64 32`) |
-| `DATABASE_URI` | Yes | MongoDB connection string |
+| `TURSO_DATABASE_URL` | Yes | Turso database URL (from turso.tech dashboard) |
+| `TURSO_AUTH_TOKEN` | Yes | Turso authentication token |
 | `NEXT_PUBLIC_SITE_URL` | Yes | Production URL for SEO/sitemap |
-| `RESEND_API_KEY` | Optional | Email service for contact form |
-| `BLOB_READ_WRITE_TOKEN` | Optional | Vercel Blob for media uploads |
+| `RESEND_API_KEY` | Yes | Email service for contact form |
+| `CONTACT_EMAIL` | Yes | Where to send form submissions |
 
-## Database Setup
+## Database Setup (Turso)
 
-### Option 1: MongoDB Atlas (Recommended)
-1. Create free cluster at mongodb.com/atlas
-2. Create database user
-3. Get connection string
-4. Add to Vercel environment variables
-
-### Option 2: Vercel Postgres
-1. Add Postgres from Vercel dashboard
-2. Environment variables auto-configured
+1. Go to https://turso.tech and log in
+2. Create a database for the client (if not already done)
+3. Go to database → **Connect** tab
+4. Copy the database URL and auth token
+5. Add to Vercel environment variables
 
 ## Output
 
@@ -158,16 +158,20 @@ After initial deployment:
 ## Troubleshooting
 
 ### Build fails on Vercel
-- Check environment variables are set
+- Check all environment variables are set
 - Review build logs for missing dependencies
-- Ensure `DATABASE_URI` is accessible from Vercel
+- Ensure `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` are correct
 
 ### Admin panel not loading
 - Verify `PAYLOAD_SECRET` is set
-- Check database connection
+- Check Turso database connection
 - Clear browser cache
 
+### Database connection errors
+- Verify Turso database URL is correct (starts with `libsql://`)
+- Check auth token is valid in Turso dashboard
+- Ensure database is not paused (free tier pauses after inactivity)
+
 ### Images not loading
-- Check Vercel Blob is configured (if using)
 - Verify image paths are correct
 - Check public folder uploaded correctly

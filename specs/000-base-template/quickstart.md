@@ -36,18 +36,29 @@ Create accounts on these services before starting:
 
 ### 1. Clone the Template
 
+Clone with your client's project name (replace `my-client-site` with actual name):
+
 ```bash
 git clone https://github.com/the-marketing-guys/tmg-website-template.git my-client-site
 cd my-client-site
 ```
 
-### 2. Install Dependencies
+### 2. Disconnect from Template Repository
+
+Remove the link to the template repo so you can create your own:
+
+```bash
+git remote remove origin
+git branch -M main
+```
+
+### 3. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Set Up Environment Variables
+### 4. Set Up Environment Variables
 
 Copy the example environment file:
 
@@ -73,18 +84,18 @@ CONTACT_EMAIL=notifications@yourdomain.com
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
 
-### 4. Start the Development Server
+### 5. Start the Development Server
 
 ```bash
 npm run dev
 ```
 
-### 5. Access the Site
+### 6. Access the Site
 
 - **Frontend**: http://localhost:3000
 - **CMS Admin**: http://localhost:3000/admin
 
-### 6. Create Admin User
+### 7. Create Admin User
 
 On first visit to `/admin`, you'll be prompted to create your admin account:
 

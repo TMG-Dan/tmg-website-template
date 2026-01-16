@@ -73,42 +73,46 @@ For each new client project, create a new database:
 
 ---
 
-## Step 2: Create a folder for the client
+## Step 2: Clone and rename the template
 
-**Mac:**
-- Open **Finder**
-- Go to **Documents**
-- Create a folder called **Projects** (if it doesn't exist)
-- Inside Projects, create a folder with the client name (e.g. `acme-plumbing`)
-
-**Windows:**
-- Open **File Explorer**
-- Go to **Documents**
-- Create a folder called **Projects** (if it doesn't exist)
-- Inside Projects, create a folder with the client name (e.g. `acme-plumbing`)
+1. Open **VS Code**
+2. Click **Terminal** in the top menu → **New Terminal**
+3. Navigate to your Projects folder:
+   - **Mac**: `cd ~/Documents/Projects`
+   - **Windows**: `cd %USERPROFILE%\Documents\Projects`
+4. Clone the template with your client's name (replace `acme-plumbing` with your client name):
+```
+git clone https://github.com/TMG-Dan/tmg-website-template.git acme-plumbing
+```
+5. Open the new folder in VS Code:
+```
+code acme-plumbing
+```
 
 ---
 
-## Step 3: Clone the website template
+## Step 3: Disconnect from template repository
 
-1. Open **VS Code**
-2. Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows)
-3. Type **Git: Clone** and select it
-4. Paste: `https://github.com/TMG-Dan/tmg-website-template.git`
-5. Select the client folder you just created
-6. When asked "Open cloned repository?" click **Open**
+This step ensures your project is separate from the template:
+
+1. In VS Code, open the Terminal (if not already open)
+2. Run these commands:
+```
+git remote remove origin
+git branch -M main
+```
+
+This removes the link to the template repo. You'll connect to your own GitHub repo later during `/tmg-deploy`.
 
 ---
 
 ## Step 4: Install dependencies
 
-1. In VS Code, click **Terminal** in the top menu
-2. Click **New Terminal**
-3. A panel opens at the bottom. Type this and press Enter:
+In the Terminal, run:
 ```
 npm install
 ```
-4. Wait for it to finish (takes 1-2 minutes)
+Wait for it to finish (takes 1-2 minutes).
 
 ---
 
@@ -207,9 +211,9 @@ You can preview the site at any point:
 
 ## Per Project
 1. Create new database in Turso dashboard
-2. Create client folder in Documents/Projects
-3. VS Code → `Cmd+Shift+P` → Git: Clone → paste template URL
-4. Terminal → `npm install`
+2. Terminal: `git clone <template-url> client-name`
+3. Terminal: `git remote remove origin`
+4. Terminal: `npm install`
 5. Copy `.env.example` to `.env.local` and fill in values
 6. Click Claude icon in sidebar
 7. Type `/tmg-setup`
