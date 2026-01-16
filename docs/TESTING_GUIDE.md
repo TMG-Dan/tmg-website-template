@@ -116,13 +116,19 @@ Claude will ask about colors and style. Answer, wait for it to finish.
 ```
 Claude will generate content for the pages. Wait for it to finish.
 
-**Command 5:**
+**Command 5 (Optional):**
+```
+/tmg-motion
+```
+Claude will ask what animation style you want (subtle, moderate, or dynamic) and apply scroll-triggered animations to all sections.
+
+**Command 6:**
 ```
 /tmg-payload-setup
 ```
 Claude will set up the CMS. Wait for it to finish.
 
-**Command 6:**
+**Command 7:**
 ```
 /tmg-deploy
 ```
@@ -157,8 +163,9 @@ You can preview the site at any point:
 6. Type `/tmg-sitemap`
 7. Type `/tmg-designer`
 8. Type `/tmg-content`
-9. Type `/tmg-payload-setup`
-10. Type `/tmg-deploy`
+9. Type `/tmg-motion` (optional - adds animations)
+10. Type `/tmg-payload-setup`
+11. Type `/tmg-deploy`
 
 ---
 
