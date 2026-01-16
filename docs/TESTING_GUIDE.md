@@ -12,6 +12,9 @@ Download and install these:
 |------|---------------|-------|
 | **VS Code** | https://code.visualstudio.com | Code editor |
 | **Node.js** | https://nodejs.org | Click the green "LTS" button |
+| **Git** | https://git-scm.com | Required for cloning - just install with defaults |
+
+**Note:** After installing Git, restart VS Code if it was open.
 
 ---
 
@@ -135,6 +138,7 @@ Follow Claude's prompts!
 
 | Problem | Solution |
 |---------|----------|
+| "Git: Clone" not showing | Install Git from https://git-scm.com and restart VS Code |
 | Commands not recognized | Restart VS Code |
 | "npm not found" | Restart VS Code after installing Node.js |
 | Site won't load | Make sure `npm run dev` is running |
