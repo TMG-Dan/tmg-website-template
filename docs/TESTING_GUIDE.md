@@ -2,6 +2,8 @@
 
 A complete step-by-step guide to set up your machine and test the TMG workflow from scratch.
 
+**Works on both Mac and Windows.**
+
 ---
 
 ## Table of Contents
@@ -22,10 +24,19 @@ Complete these steps once on your machine. Skip any you've already done.
 
 **Download:** https://code.visualstudio.com/
 
+### Mac
 1. Download the Mac version
 2. Open the downloaded `.zip` file
 3. Drag **Visual Studio Code** to your Applications folder
 4. Open VS Code from Applications
+
+### Windows
+1. Download the Windows version
+2. Run the downloaded `.exe` installer
+3. Accept the license agreement
+4. **Important:** Check "Add to PATH" option during installation
+5. Complete the installation
+6. Open VS Code from Start Menu
 
 **Verify:**
 - VS Code opens without errors
@@ -36,22 +47,80 @@ Complete these steps once on your machine. Skip any you've already done.
 
 **Download:** https://nodejs.org/
 
-1. Download the **LTS** version (recommended)
+### Mac
+1. Download the **LTS** version (macOS Installer .pkg)
 2. Open the downloaded `.pkg` file
 3. Follow the installer prompts (accept defaults)
 4. Restart Terminal if it was open
 
+### Windows
+1. Download the **LTS** version (Windows Installer .msi)
+2. Run the downloaded `.msi` installer
+3. Accept the license agreement
+4. Use default installation options
+5. **Important:** Check "Automatically install necessary tools" if prompted
+6. Complete the installation
+7. Restart any open Command Prompt or PowerShell windows
+
 **Verify:**
+
+Mac (Terminal):
 ```bash
+node --version
+# Should show v20.x.x or v18.x.x
+```
+
+Windows (Command Prompt or PowerShell):
+```cmd
 node --version
 # Should show v20.x.x or v18.x.x
 ```
 
 ---
 
-## Step 1.3: Install Homebrew (Mac Package Manager)
+## Step 1.3: Install Git
 
-Open Terminal (Applications → Utilities → Terminal) and paste:
+### Mac
+Git comes pre-installed on Mac. If not, install via Xcode Command Line Tools:
+
+Open Terminal and run:
+```bash
+xcode-select --install
+```
+
+### Windows
+**Download:** https://git-scm.com/download/win
+
+1. Download the Windows installer
+2. Run the installer
+3. **Important settings during installation:**
+   - Choose "Git from the command line and also from 3rd-party software"
+   - Choose "Use Windows' default console window" OR "Use Windows Terminal"
+   - Use default options for everything else
+4. Complete the installation
+5. Restart any open Command Prompt or PowerShell windows
+
+**Verify:**
+
+Mac:
+```bash
+git --version
+# Should show git version 2.x.x
+```
+
+Windows:
+```cmd
+git --version
+# Should show git version 2.x.x
+```
+
+---
+
+## Step 1.4: Install GitHub CLI
+
+### Mac
+
+First, install Homebrew (Mac package manager) if you don't have it:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -64,24 +133,39 @@ echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
 
-**Verify:**
-```bash
-brew --version
-# Should show Homebrew 4.x.x
-```
-
----
-
-## Step 1.4: Install GitHub CLI
-
-In Terminal:
+Then install GitHub CLI:
 
 ```bash
 brew install gh
 ```
 
+### Windows
+
+**Option A - Using winget (Windows 10/11):**
+
+Open PowerShell as Administrator and run:
+```powershell
+winget install GitHub.cli
+```
+
+**Option B - Manual download:**
+
+1. Go to: https://cli.github.com/
+2. Click "Download for Windows"
+3. Run the installer
+4. Complete the installation
+5. Restart any open Command Prompt or PowerShell windows
+
 **Verify:**
+
+Mac:
 ```bash
+gh --version
+# Should show gh version 2.x.x
+```
+
+Windows:
+```cmd
 gh --version
 # Should show gh version 2.x.x
 ```
@@ -90,8 +174,9 @@ gh --version
 
 ## Step 1.5: Authenticate GitHub CLI
 
-In Terminal:
+### Mac (Terminal) and Windows (Command Prompt/PowerShell)
 
+Run:
 ```bash
 gh auth login
 ```
@@ -116,7 +201,9 @@ gh auth status
 
 ## Step 1.6: Install Vercel CLI
 
-In Terminal:
+### Mac and Windows
+
+Run in Terminal (Mac) or Command Prompt/PowerShell (Windows):
 
 ```bash
 npm install -g vercel
@@ -132,15 +219,16 @@ vercel --version
 
 ## Step 1.7: Authenticate Vercel CLI
 
-In Terminal:
+### Mac and Windows
 
+Run:
 ```bash
 vercel login
 ```
 
 1. Select your login method (GitHub, Email, etc.)
 2. Complete authentication in browser
-3. Return to Terminal
+3. Return to Terminal/Command Prompt
 
 **Verify:**
 ```bash
@@ -152,8 +240,10 @@ vercel whoami
 
 ## Step 1.8: Install Claude Code Extension
 
+### Mac and Windows (same steps)
+
 1. Open VS Code
-2. Click the **Extensions** icon in the left sidebar (or press `Cmd+Shift+X`)
+2. Click the **Extensions** icon in the left sidebar (or press `Cmd+Shift+X` on Mac / `Ctrl+Shift+X` on Windows)
 3. Search for **"Claude Code"**
 4. Click **Install** on "Claude Code" by Anthropic
 5. After installation, click the Claude icon in the left sidebar
@@ -169,7 +259,7 @@ vercel whoami
 
 This gives you access to all the `/tmg-*` commands.
 
-In Terminal:
+### Mac (Terminal)
 
 ```bash
 cd ~/Documents
@@ -182,17 +272,44 @@ ls ~/Documents/TMG_BASE/.claude/commands/
 # Should show: tmg.content.md, tmg.deploy.md, tmg.designer.md, etc.
 ```
 
+### Windows (Command Prompt)
+
+```cmd
+cd %USERPROFILE%\Documents
+git clone https://github.com/TMG-Dan/TMG_BASE.git
+```
+
+**Verify:**
+```cmd
+dir %USERPROFILE%\Documents\TMG_BASE\.claude\commands\
+# Should show: tmg.content.md, tmg.deploy.md, tmg.designer.md, etc.
+```
+
+### Windows (PowerShell)
+
+```powershell
+cd $HOME\Documents
+git clone https://github.com/TMG-Dan/TMG_BASE.git
+```
+
+**Verify:**
+```powershell
+ls $HOME\Documents\TMG_BASE\.claude\commands\
+# Should show: tmg.content.md, tmg.deploy.md, tmg.designer.md, etc.
+```
+
 ---
 
 ## Step 1.10: Verify Everything Works
 
-Run this checklist in Terminal:
+### Mac (Terminal)
 
 ```bash
 # Check all tools are installed
 echo "=== Checking installations ==="
 node --version && echo "✓ Node.js installed"
 npm --version && echo "✓ npm installed"
+git --version && echo "✓ Git installed"
 gh --version && echo "✓ GitHub CLI installed"
 vercel --version && echo "✓ Vercel CLI installed"
 
@@ -206,6 +323,52 @@ vercel whoami && echo "✓ Vercel authenticated"
 echo ""
 echo "=== Checking TMG_BASE ==="
 ls ~/Documents/TMG_BASE/.claude/commands/tmg.*.md && echo "✓ TMG commands available"
+```
+
+### Windows (PowerShell)
+
+```powershell
+# Check all tools are installed
+Write-Host "=== Checking installations ===" -ForegroundColor Cyan
+node --version; Write-Host "✓ Node.js installed" -ForegroundColor Green
+npm --version; Write-Host "✓ npm installed" -ForegroundColor Green
+git --version; Write-Host "✓ Git installed" -ForegroundColor Green
+gh --version; Write-Host "✓ GitHub CLI installed" -ForegroundColor Green
+vercel --version; Write-Host "✓ Vercel CLI installed" -ForegroundColor Green
+
+# Check authentications
+Write-Host ""
+Write-Host "=== Checking authentications ===" -ForegroundColor Cyan
+gh auth status; Write-Host "✓ GitHub authenticated" -ForegroundColor Green
+vercel whoami; Write-Host "✓ Vercel authenticated" -ForegroundColor Green
+
+# Check TMG_BASE
+Write-Host ""
+Write-Host "=== Checking TMG_BASE ===" -ForegroundColor Cyan
+Get-ChildItem $HOME\Documents\TMG_BASE\.claude\commands\tmg.*.md
+Write-Host "✓ TMG commands available" -ForegroundColor Green
+```
+
+### Windows (Command Prompt)
+
+```cmd
+@echo off
+echo === Checking installations ===
+node --version && echo ✓ Node.js installed
+npm --version && echo ✓ npm installed
+git --version && echo ✓ Git installed
+gh --version && echo ✓ GitHub CLI installed
+vercel --version && echo ✓ Vercel CLI installed
+
+echo.
+echo === Checking authentications ===
+gh auth status && echo ✓ GitHub authenticated
+vercel whoami && echo ✓ Vercel authenticated
+
+echo.
+echo === Checking TMG_BASE ===
+dir %USERPROFILE%\Documents\TMG_BASE\.claude\commands\tmg.*.md
+echo ✓ TMG commands available
 ```
 
 **Expected output:** All items show ✓
@@ -230,11 +393,27 @@ Now test the actual TMG workflow with a fake client project.
 
 ## Step 2.1: Create Test Project Folder
 
-Open Terminal and run:
+### Mac (Terminal)
 
 ```bash
 mkdir -p ~/Projects/test-acme-plumbing
 cd ~/Projects/test-acme-plumbing
+code .
+```
+
+### Windows (Command Prompt)
+
+```cmd
+mkdir %USERPROFILE%\Projects\test-acme-plumbing
+cd %USERPROFILE%\Projects\test-acme-plumbing
+code .
+```
+
+### Windows (PowerShell)
+
+```powershell
+mkdir $HOME\Projects\test-acme-plumbing -Force
+cd $HOME\Projects\test-acme-plumbing
 code .
 ```
 
@@ -245,8 +424,14 @@ This creates a folder and opens VS Code in it.
 ## Step 2.2: Open Claude Code Panel
 
 In VS Code:
-1. Click the **Claude icon** in the left sidebar, OR
-2. Press `Cmd+Shift+P` and type "Claude: Open Panel"
+
+**Mac:**
+- Click the **Claude icon** in the left sidebar, OR
+- Press `Cmd+Shift+P` and type "Claude: Open Panel"
+
+**Windows:**
+- Click the **Claude icon** in the left sidebar, OR
+- Press `Ctrl+Shift+P` and type "Claude: Open Panel"
 
 ---
 
@@ -270,14 +455,20 @@ Type in the Claude chat:
 - Initialize git
 
 **Verify it worked:**
-```bash
-# In Terminal, in the project folder:
-cat tmg-config.json
-# Should show clientName: "Acme Plumbing"
 
+Mac:
+```bash
+cat tmg-config.json
 npm run build
-# Should complete without errors
 ```
+
+Windows:
+```cmd
+type tmg-config.json
+npm run build
+```
+
+Should show `clientName: "Acme Plumbing"` and build should complete without errors.
 
 ---
 
@@ -301,15 +492,19 @@ Type in Claude:
 **Your response:** Accept the suggestions or customize
 
 **Verify it worked:**
+
+Mac:
 ```bash
 ls src/app/\(frontend\)/
-# Should show: about, blog, contact, services, service-areas, page.tsx
-
 cat src/config/navigation.ts
-# Should show Services and Service Areas in nav
-
 npm run build
-# Should complete without errors
+```
+
+Windows:
+```cmd
+dir src\app\(frontend)\
+type src\config\navigation.ts
+npm run build
 ```
 
 ---
@@ -340,10 +535,10 @@ https://webflow.com/templates/html/flavor-starter-restaurant-website-template
 **Verify it worked:**
 ```bash
 npm run dev
-# Open http://localhost:3000 in browser
-# Check that colors match your choice
-# Press Ctrl+C to stop server
 ```
+Open http://localhost:3000 in browser. Check that colors match your choice.
+
+Press `Ctrl+C` to stop server.
 
 ---
 
@@ -365,10 +560,10 @@ Type in Claude:
 **Verify it worked:**
 ```bash
 npm run dev
-# Open http://localhost:3000 in browser
-# Browse each page - should have real content
-# Press Ctrl+C to stop server
 ```
+Open http://localhost:3000 in browser. Browse each page - should have real content.
+
+Press `Ctrl+C` to stop server.
 
 ---
 
@@ -395,11 +590,10 @@ Type in Claude:
 **Verify it worked:**
 ```bash
 npm run dev
-# Open http://localhost:3000/admin in browser
-# Create an admin account (first-time setup)
-# Check that collections appear in sidebar
-# Press Ctrl+C to stop server
 ```
+Open http://localhost:3000/admin in browser. Create an admin account (first-time setup). Check that collections appear in sidebar.
+
+Press `Ctrl+C` to stop server.
 
 ---
 
@@ -447,31 +641,53 @@ npm test
 
 # Check TypeScript
 npx tsc --noEmit
+```
 
-# Check what files exist
+Check what files exist:
+
+Mac:
+```bash
 ls -la src/app/\(frontend\)/
+```
+
+Windows:
+```cmd
+dir src\app\(frontend)\
 ```
 
 ---
 
 ## Common Issues & Fixes
 
-### "command not found: node"
+### "command not found: node" / "'node' is not recognized"
 
 Node.js not installed. Go back to Step 1.2.
 
 ---
 
-### "command not found: gh"
+### "command not found: git" / "'git' is not recognized"
 
-GitHub CLI not installed. Run:
+Git not installed. Go back to Step 1.3.
+
+---
+
+### "command not found: gh" / "'gh' is not recognized"
+
+GitHub CLI not installed.
+
+Mac:
 ```bash
 brew install gh
 ```
 
+Windows:
+```powershell
+winget install GitHub.cli
+```
+
 ---
 
-### "command not found: vercel"
+### "command not found: vercel" / "'vercel' is not recognized"
 
 Vercel CLI not installed. Run:
 ```bash
@@ -492,8 +708,15 @@ gh auth login
 ### "/tmg-setup command not recognized"
 
 Claude Code can't find the commands. Make sure:
+
+**Mac:**
 1. TMG_BASE is cloned to `~/Documents/TMG_BASE`
 2. The `.claude/commands/` folder exists
+3. Try restarting VS Code
+
+**Windows:**
+1. TMG_BASE is cloned to `%USERPROFILE%\Documents\TMG_BASE`
+2. The `.claude\commands\` folder exists
 3. Try restarting VS Code
 
 ---
@@ -531,9 +754,36 @@ import '@payloadcms/next/css'
 ### npm install fails
 
 Try clearing cache:
+
+Mac/Windows:
 ```bash
 rm -rf node_modules package-lock.json
 npm install
+```
+
+Windows (if rm doesn't work):
+```cmd
+rmdir /s /q node_modules
+del package-lock.json
+npm install
+```
+
+---
+
+### Windows: "execution of scripts is disabled"
+
+PowerShell may block scripts. Run PowerShell as Administrator and execute:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+---
+
+### Windows: Long path issues
+
+Enable long paths. Run PowerShell as Administrator:
+```powershell
+git config --system core.longpaths true
 ```
 
 ---
@@ -542,8 +792,19 @@ npm install
 
 To delete the test project:
 
+**Mac:**
 ```bash
 rm -rf ~/Projects/test-acme-plumbing
+```
+
+**Windows (Command Prompt):**
+```cmd
+rmdir /s /q %USERPROFILE%\Projects\test-acme-plumbing
+```
+
+**Windows (PowerShell):**
+```powershell
+Remove-Item -Recurse -Force $HOME\Projects\test-acme-plumbing
 ```
 
 If you ran `/tmg-deploy`, also delete:
@@ -612,3 +873,17 @@ If you get stuck:
 1. Copy the exact error message
 2. Ask Claude: "I got this error: [paste]. How do I fix it?"
 3. If Claude can't help, contact Dan
+
+---
+
+## Quick Reference: Terminal Commands
+
+| Action | Mac | Windows (Cmd) | Windows (PowerShell) |
+|--------|-----|---------------|---------------------|
+| Home directory | `~` | `%USERPROFILE%` | `$HOME` |
+| List files | `ls` | `dir` | `ls` or `dir` |
+| Change directory | `cd` | `cd` | `cd` |
+| Create folder | `mkdir -p` | `mkdir` | `mkdir -Force` |
+| Delete folder | `rm -rf` | `rmdir /s /q` | `Remove-Item -Recurse -Force` |
+| View file | `cat` | `type` | `Get-Content` |
+| Open VS Code | `code .` | `code .` | `code .` |
