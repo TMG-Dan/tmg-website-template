@@ -30,18 +30,6 @@ Download and install these three things:
 6. After installing, click the **Claude icon** that appears in the left sidebar
 7. Sign in with your Anthropic account
 
----
-
-## Step 3: Clone the commands repo
-
-This downloads the slash commands to your computer.
-
-1. In VS Code, press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows)
-2. Type **Git: Clone** and select it
-3. Paste this URL: `https://github.com/TMG-Dan/TMG_BASE.git`
-4. Select your **Documents** folder
-5. When asked "Open cloned repository?" click **No**
-
 ✅ **One-time setup complete!**
 
 ---
@@ -159,7 +147,6 @@ You can preview the site at any point:
 ## One-Time Setup
 1. Install VS Code, Node.js, Git
 2. Install Claude Code extension in VS Code
-3. Clone TMG_BASE to Documents
 
 ## Per Project
 1. Create client folder in Documents/Projects
@@ -182,5 +169,5 @@ You can preview the site at any point:
 | Can't find Claude icon | Make sure you installed Claude Code extension (Part 1, Step 2) |
 | "Git: Clone" doesn't appear | Install Git and restart VS Code |
 | "npm not found" | Install Node.js and restart VS Code |
-| Commands like `/tmg-setup` don't work | Make sure you cloned TMG_BASE (Part 1, Step 3) |
+| Commands like `/tmg-setup` don't work | Make sure you cloned the template (Part 2, Step 2). The commands are included in the template. |
 | Website won't load at localhost:3000 | Make sure `npm run dev` is running in the terminal |
