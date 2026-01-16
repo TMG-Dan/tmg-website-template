@@ -30,8 +30,6 @@ yarn-error.log*
 /payload.db-journal
 /media/
 
-# Convex
-.convex/
 
 # IDE
 .idea/

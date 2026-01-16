@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // TODO: Store submission in Convex when properly configured
+    // TODO: Store submission in Payload CMS FormSubmissions collection
     // For now, just log the submission
     console.log('Contact form submission:', { name, email, phone, message })
 
