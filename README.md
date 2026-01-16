@@ -2,6 +2,8 @@
 
 A CLI-based website builder system that enables non-technical partners to create professional websites for small local businesses using Claude Code slash commands.
 
+> **Partner?** Start here: [Partner Guide](docs/PARTNER_GUIDE.md)
+
 ## Overview
 
 This repo contains the **development environment** for the TMG Website Builder. It uses:
